@@ -1,10 +1,49 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JACSNL LightComm</title>
+  <title>JACSNL LightComm Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-  <h1>🚀 Sistema VLC LightComm</h1>
-  <p>Proyecto funcionando en GitHub Pages</p>
+  <h1>📡 VLC Dashboard en Tiempo Real</h1>
+  <canvas id="grafico" width="400" height="200"></canvas>
+
+  <script>
+    const ctx = document.getElementById('grafico').getContext('2d');
+
+    let data = {
+      labels: [],
+      datasets: [{
+        label: 'Señal VLC',
+        data: [],
+        borderWidth: 2
+      }]
+    };
+
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: data,
+      options: {
+        animation: false
+      }
+    });
+
+    // Simulación (luego lo conectamos a Firebase)
+    setInterval(() => {
+      let valor = Math.floor(Math.random() * 2);
+
+      data.labels.push('');
+      data.datasets[0].data.push(valor);
+
+      if (data.labels.length > 20) {
+        data.labels.shift();
+        data.datasets[0].data.shift();
+      }
+
+      chart.update();
+    }, 500);
+  </script>
 </body>
 </html>
